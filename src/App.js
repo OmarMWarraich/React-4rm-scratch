@@ -3,10 +3,15 @@ import './App.css';
 
 class MyComponent extends React.Component {
   render () {
+    const cityArray = ['Karachi', 'Lahore', 'Peshawar', 'Quetta']
+
+
     return (
-      <div>
-        <h1> Hello World! </h1>
-      </div>
+      <ul>
+        {
+          cityArray.map(city => <li key={city}>{city}</li>)
+        }
+      </ul>
     )
   }
 }
