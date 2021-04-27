@@ -3,12 +3,8 @@ body {
   font-family: 'Lucida Sans', Geneva, Verdana, Arial, Helvetica, sans-serif;
 }
 
-h1 {
-  color: navy;
-  text-decoration: underline;
-  text-align: center;
-}
-
-.li-styling {
+.listItem {
+  font-size: 16px;
   margin: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }
