@@ -2,14 +2,30 @@
 import React from 'react';
 import './App.css';
 
-// Forms 
-// Input fields:-e.g,  Textbox, TextArea, Checkbox, Date Input, Radio, Select
+// Conditional Rendering
+// Conditional Rendering is about deciding what to render and when
+// Simply renders if provided condition is met
+// e.g, max limit message comp => renders error msg instd of alert in case of no city name provided on submit
+// Three conditional rendering approaches;
+// render if true (if else)
+// ternary expression (condition ? true : false)
+// Short circuit evaluation (&&,||)
+
+
+function ErrorMessage(props) {
+  const { message } = props
+
+  return <span style={{ color: ' red '}}>{message}</span>
+}
 
 
 function ControlledInputBox (props) {
-  const { handleInputChange, textBoxValue } = props
+  const { handleInputChange, textBoxValue, noCityFlag } = props
   return (
-    <input type='text' value={textBoxValue} onChange={handleInputChange} />
+    <>
+    <input type='text' value={textBoxValue} onChange={handleInputChange} placeholder='Enter.' />
+    {noCityFlag && <ErrorMessage message='Enter city name' />}
+    </>
   )
 }
 function ButtonComponent (props) {
@@ -18,7 +34,8 @@ function ButtonComponent (props) {
 class MyComponent extends React.Component {
   state = {
     cityArray: ['Karachi', 'Lahore', 'Peshawar', 'Quetta'],
-    textBoxValue: ''
+    textBoxValue: '',
+    noCityFlag: false,
   }
   handleInputChange = (e) => {
     const { value } = e.target
@@ -30,7 +47,8 @@ class MyComponent extends React.Component {
     const { textBoxValue } = this.state
     this.setState( prevState => ({
       cityArray: [...prevState.cityArray, textBoxValue],
-      textBoxValue: ''
+      textBoxValue: '',
+      noCityFlag: false
     }))
   }
   removeCity = (e) => {
@@ -47,23 +65,23 @@ class MyComponent extends React.Component {
     e.preventDefault()
 
     if (textBoxValue === '') {
-      alert('Please enter city name to save')
+      this.setState({ noCityFlag: true})
     } else {
       this.addCity()
     }
   }  
 
   render () {
-    const { cityArray, textBoxValue } = this.state
+    const { cityArray, textBoxValue, noCityFlag } = this.state
     
     return (
       <fieldset>
       <form onSubmit={this.handleForm}>
       <ul>
       {cityArray.map(city => (
-        <li key={city}>
-          {' '} 
-          {city}{' '}
+        <li key={city}
+          style={{ color: cityArray.length > 5 ? 'red' : 'green' }}>
+          {city}
           <button value={city} onClick={this.removeCity}>
             X
             </button>
