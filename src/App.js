@@ -1,7 +1,13 @@
 import React from 'react';
 import './App.css';
+import PropType from 'prop-types';
 
-//Passing Props to Functional Component
+//PropType Example
+
+//React components are meant to be reused
+// Passing wrong prop type => throws error
+
+
 
 class MyComponent extends React.Component {
   render () {
@@ -23,13 +29,10 @@ class MyComponent extends React.Component {
   }
 }
 
-// returned Fn MyFunctionalComponent=>{props.heading}
-function MyFunctionalComponent (props) {
-  return <h1>{props.heading}</h1>
-// closed MyFunctionalComponent Fn
-}  
+MyComponent.propTypes = {
+  cityArray: PropType.array.isRequired
+}
 
-// declared const arrays in main function
 function App() {
   const cityArray1 = ['Karachi', 'Lahore', 'Peshawar', 'Quetta']
   const cityArray2 = ['Hyderabad', 'Islamabad', 'Sawat', 'Gwadar']
@@ -39,7 +42,7 @@ function App() {
 
   return (
     <div>
-    <MyFunctionalComponent heading='Cities List' />  
+    
     <MyComponent cityArray={cityArray1} myFunction={myFunction}/>
     <MyComponent cityArray={cityArray2} myFunction={myFunction}/>
     </div>
@@ -47,3 +50,4 @@ function App() {
 }
 
 export default App;
+
