@@ -15,7 +15,7 @@ import './App.css';
 function ErrorMessage(props) {
   const { message } = props
 
-  return <span style={{ color: ' red '}}>{message}</span>
+  return <span style={{ color: 'red'}}>{message}</span>
 }
 
 
@@ -29,7 +29,7 @@ function ControlledInputBox (props) {
   )
 }
 function ButtonComponent (props) {
-  return (<button>Save changes</button>)
+  return (<button style={{ backgroundColor: 'navy', color:'white'}}>Save changes</button>)
 }
 class MyComponent extends React.Component {
   state = {
@@ -75,14 +75,21 @@ class MyComponent extends React.Component {
     const { cityArray, textBoxValue, noCityFlag } = this.state
     
     return (
-      <fieldset>
-      <form onSubmit={this.handleForm}>
-      <ul>
+      <fieldset style={{backgroundColor:'red'}}>
+      <form 
+      onSubmit={this.handleForm} 
+      style={{backgroundColor:'yellow'}}>
+      <ul style={{ border: '1px solid black', padding: '10px'}}>
       {cityArray.map(city => (
-        <li key={city}
+        <li 
+          className="li-styling"
+          key={city}
           style={{ color: cityArray.length > 5 ? 'red' : 'green' }}>
           {city}
-          <button value={city} onClick={this.removeCity}>
+          <button 
+            className="li-styling"
+            value={city} 
+            onClick={this.removeCity}>
             X
             </button>
              </li>))}
@@ -104,11 +111,24 @@ function MyFunctionalComponent(props) {
   return <h1>{heading}</h1>
 }  
 function App() {  
+  const someCondition = true // try changing true with false
+
+  if(someCondition === true){
   return (
-    <div>
+    <div
+      style={{
+        display: 'grid',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      >
       <MyFunctionalComponent heading='Cities List' />
       <MyComponent />
     </div>
-  )
+  ) 
+} else {
+  return
+  <h1>Nothing to display</h1>
+}
 }
 export default App
