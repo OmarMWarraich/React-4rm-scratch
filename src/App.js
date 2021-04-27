@@ -1,13 +1,10 @@
+
 import React from 'react';
 import './App.css';
 
-//Changing State
-// To change state we use setState method. No matter how may key value pairs are there, just pass speific key and their new values you want to update
-// Once setState method updates the state it rerenders that component and your compnent gets updated data.
-// setState fn is an asynchronous function
-// Two variations => 
-// Object based approach //\\ this.setState({cityArray: [...this.state.cityArray, value]})) 
-// Funcitonal Approach //\\ this.setState( (prevState) => {cityArray: [...this.state.cityArray]})
+// Forms 
+// Input fields:-e.g,  Textbox, TextArea, Checkbox, Date Input, Radio, Select
+
 
 function ControlledInputBox (props) {
   const { handleInputChange, textBoxValue } = props
@@ -16,10 +13,7 @@ function ControlledInputBox (props) {
   )
 }
 function ButtonComponent (props) {
-  const { addCity } = props
-  return (
-    <button onClick={addCity}>Save changes</button>
-  )
+  return (<button>Save changes</button>)
 }
 class MyComponent extends React.Component {
   state = {
@@ -34,7 +28,6 @@ class MyComponent extends React.Component {
   }
   addCity = (city) => {
     const { textBoxValue } = this.state
-    
     this.setState( prevState => ({
       cityArray: [...prevState.cityArray, textBoxValue],
       textBoxValue: ''
@@ -43,24 +36,46 @@ class MyComponent extends React.Component {
   removeCity = (e) => {
     const { cityArray } = this.state
     const { value } = e.target
-
     const newCityArray = cityArray.filter(city => city !== value)
-
     this.setState({
       cityArray: newCityArray
     })
   }
+
+  handleForm = e => {
+    const { textBoxValue } = this.state
+    e.preventDefault()
+
+    if (textBoxValue === '') {
+      alert('Please enter city name to save')
+    } else {
+      this.addCity()
+    }
+  }  
+
   render () {
     const { cityArray, textBoxValue } = this.state
     
     return (
-      <>
+      <fieldset>
+      <form onSubmit={this.handleForm}>
       <ul>
-        {cityArray.map(city =><li key={city}>{city} <button value={city} onClick={this.removeCity}>X</button> </li>)}
-      </ul>
-      <ControlledInputBox textBoxValue={textBoxValue} handleInputChange={this.handleInputChange}/>
-      <ButtonComponent addCity={() => this.addCity()}/>
-      </>
+      {cityArray.map(city => (
+        <li key={city}>
+          {' '} 
+          {city}{' '}
+          <button value={city} onClick={this.removeCity}>
+            X
+            </button>
+             </li>))}
+    </ul>
+      <ControlledInputBox
+         textBoxValue={textBoxValue} 
+         handleInputChange={this.handleInputChange}
+         />
+      <ButtonComponent />
+      </form>
+      </fieldset>
     )
   }
 
