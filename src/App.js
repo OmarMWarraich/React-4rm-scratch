@@ -1,6 +1,6 @@
 
 import React from 'react';
-import './App.css';
+// import './App.css';
 import styled from 'styled-components';
 
 // ComponentDidMount
@@ -53,15 +53,12 @@ class MyComponent extends React.Component {
     errorShowFlag: false
   }
 
-  componentDidMount () {
-    /** External API call can be done here and update the state when data recieved */
-    const dataRecievedFromAPICall = ['Karachi', 'Lahore', 'Peshawar', 'Quetta']
+  static getDerivedStateFromProps(props, state) {
+    const { cityArray } = props
 
-    setTimeout(() => {
-      this.setState({
-        cityArray: dataRecievedFromAPICall
-      })
-    }, 1000)
+    return {
+      cityArray
+    }
   }
   
   handleInputChange = e => {
@@ -106,11 +103,10 @@ class MyComponent extends React.Component {
 
   render() {
     const {cityArray,textBoxValue, errorShowFlag} = this.state
-    const showSite = cityArray.length !== 0
+    
 
-    return !showSite ? (
-      <ErrorMessage errorMsg='Loading Data...' />
-    ) : (
+    return (
+      
       <>
         <ul style={{ border: '2px dotted navy', padding: '20px'}}>
           {cityArray.map(city => (
@@ -146,6 +142,7 @@ function MyFunctionalComponent (props) {
 
 function App () {
   const showSite = true
+  const cityArray=['Karachi', 'Lahore', 'Peshawar', 'Quetta']
 
   if (showSite) {
     return (
