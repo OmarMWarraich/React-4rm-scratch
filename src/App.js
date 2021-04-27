@@ -2,14 +2,15 @@ import React from 'react';
 import './App.css';
 import PropType from 'prop-types';
 
-//PropType Example
-
-//React components are meant to be reused
-// Passing wrong prop type => throws error
-
+//Best to use static library when initializing props
 
 
 class MyComponent extends React.Component {
+  static propTypes = {
+    cityArray: PropType.array.isRequired
+  }
+  
+  
   render () {
 
     
@@ -29,22 +30,22 @@ class MyComponent extends React.Component {
   }
 }
 
-MyComponent.propTypes = {
-  cityArray: PropType.array.isRequired
-}
+
+  
+
 
 function App() {
   const cityArray1 = ['Karachi', 'Lahore', 'Peshawar', 'Quetta']
   const cityArray2 = ['Hyderabad', 'Islamabad', 'Sawat', 'Gwadar']
 
 
-  const myFunction = () => alert('Hello World')
+  // const myFunction = () => alert('Hello World')
 
   return (
     <div>
     
-    <MyComponent cityArray={cityArray1} myFunction={myFunction}/>
-    <MyComponent cityArray={cityArray2} myFunction={myFunction}/>
+    <MyComponent cityArray={cityArray1}/>
+    <MyComponent cityArray={cityArray2}/>
     </div>
   )
 }
