@@ -40,13 +40,23 @@ class MyComponent extends React.Component {
       textBoxValue: ''
     }))
   }
+  removeCity = (e) => {
+    const { cityArray } = this.state
+    const { value } = e.target
+
+    const newCityArray = cityArray.filter(city => city !== value)
+
+    this.setState({
+      cityArray: newCityArray
+    })
+  }
   render () {
     const { cityArray, textBoxValue } = this.state
     
     return (
       <>
       <ul>
-        {cityArray.map(city =><li key={city}>{city}</li>)}
+        {cityArray.map(city =><li key={city}>{city} <button value={city} onClick={this.removeCity}>X</button> </li>)}
       </ul>
       <ControlledInputBox textBoxValue={textBoxValue} handleInputChange={this.handleInputChange}/>
       <ButtonComponent addCity={() => this.addCity()}/>
