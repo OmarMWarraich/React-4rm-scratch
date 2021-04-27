@@ -52,15 +52,33 @@ class MyComponent extends React.Component {
     textBoxValue: '',
     errorShowFlag: false
   }
+  componentDidMount () {
+    const dataRecievedFromAPICall = [
+      'Karachi', 
+      'Lahore',
+      'Peshawar',
+      'Quetta',
+      'Swat'
+    ]
 
-  static getDerivedStateFromProps(props, state) {
-    const { cityArray } = props
-
-    return {
-      cityArray
-    }
+    setTimeout(() => {
+      this.setState({
+        cityArray: dataRecievedFromAPICall
+      })
+    }, 1000)
   }
-  
+
+  shouldComponentUpdate ( nextProps, nextState ) {
+    const { cityArray } = nextState
+    const findCity = cityArray.indexOf('Swat')
+
+    // Remove Swat from ComponentDidMount and see the change on Browser
+    if (findCity === -1) return false
+
+    return true
+  }
+
+
   handleInputChange = e => {
     const { value } = e.target
     this.setstate({
@@ -103,10 +121,12 @@ class MyComponent extends React.Component {
 
   render() {
     const {cityArray,textBoxValue, errorShowFlag} = this.state
+    const showSite = cityArray.length !== 0
     
 
-    return (
-      
+    return !showSite ? (
+      <ErrorMessage errorMsg='Loading Data...' />
+    ) : (
       <>
         <ul style={{ border: '2px dotted navy', padding: '20px'}}>
           {cityArray.map(city => (
@@ -142,7 +162,7 @@ function MyFunctionalComponent (props) {
 
 function App () {
   const showSite = true
-  const cityArray=['Karachi', 'Lahore', 'Peshawar', 'Quetta']
+  
 
   if (showSite) {
     return (
